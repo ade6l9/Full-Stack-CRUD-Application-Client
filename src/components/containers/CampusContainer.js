@@ -35,11 +35,13 @@ render() {
       <Header />
       <CampusView
         campus={this.props.campus}
-        removeStudentFromCampus={this.props.removeStudentFromCampus} // Pass the thunk to CampusView
+        removeStudentFromCampus={this.props.removeStudentFromCampus}
+        fetchCampus={this.props.fetchCampus} // Pass fetchCampus as a prop
       />
     </div>
   );
 }
+
 }
 
 
@@ -58,13 +60,18 @@ const mapState = (state) => {
 //     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
 //   };
 // };
-const mapDispatch = (dispatch) => {
-  return {
-    fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
-    removeStudentFromCampus: (studentId, campusId) =>
-      dispatch(removeStudentFromCampusThunk(studentId, campusId)), // Add this line
-  };
-};
+// const mapDispatch = (dispatch) => {
+//   return {
+//     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
+//     removeStudentFromCampus: (studentId, campusId) =>
+//       dispatch(removeStudentFromCampusThunk(studentId, campusId)), // Add this line
+//   };
+// };
+const mapDispatch = (dispatch) => ({
+  fetchCampus: (id) => dispatch(fetchCampusThunk(id)), // Map fetchCampusThunk
+  removeStudentFromCampus: (studentId, campusId) =>
+    dispatch(removeStudentFromCampusThunk(studentId, campusId)),
+});
 
 
 
