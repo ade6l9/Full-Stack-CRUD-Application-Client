@@ -312,7 +312,7 @@ const NewStudentContainer = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    const requiredFields = ['firstname', 'lastname', 'email', 'gpa', 'campusId'];
+    const requiredFields = ['firstname', 'lastname', 'email', 'gpa'];
     const blankFields = requiredFields.filter((field) => newStudent[field] === '');
     if (blankFields.length > 0) {
       setBlankFieldError(`Please fill in the following fields: ${blankFields.join(', ')}`);
