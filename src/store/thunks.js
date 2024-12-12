@@ -160,7 +160,15 @@ export const deleteCampusThunk = (campusId) => async (dispatch) => {
   }
 };
 
-
+// edit campus
+export const updateCampusThunk = (campusId, updatedData) => async (dispatch) => {
+  try {
+    const { data: updatedCampus } = await axios.put(`/api/campuses/${campusId}`, updatedData);
+    dispatch(fetchCampusThunk(updatedCampus.id)); // Re-fetch the updated campus
+  } catch (error) {
+    console.error("Error updating campus:", error);
+  }
+};
 
 
 

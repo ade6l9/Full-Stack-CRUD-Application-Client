@@ -206,7 +206,8 @@ const CampusView = (props) => {
     campus,
     allStudents,
     updateStudent,
-    removeStudentFromCampus, // Updated: Pass removeStudentFromCampusThunk as a prop
+    removeStudentFromCampus,
+    fetchCampus, // Ensure this is included if being used
   } = props;
 
   // Track whether to show the forms
@@ -245,9 +246,14 @@ const CampusView = (props) => {
   };
 
   // New: Handle removing a student from the campus
+  // const handleRemoveStudent = async (studentId) => {
+  //   await removeStudentFromCampus(studentId, campus.id); // Call the thunk
+  // };
   const handleRemoveStudent = async (studentId) => {
-    await removeStudentFromCampus(studentId, campus.id); // Call the thunk
+    await removeStudentFromCampus(studentId, campus.id); // Remove the student
+    await fetchCampus(campus.id); // Re-fetch the updated campus data
   };
+  
 
   return (
     <div>
@@ -367,6 +373,7 @@ const CampusView = (props) => {
       <Link to={`/editcampus/${campus.id}`}>
         <button>Edit Campus</button>
       </Link>
+
     </div>
   );
 };
