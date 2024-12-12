@@ -1,4 +1,6 @@
-// import React, { useState } from "react";
+
+
+// import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 // import axios from "axios";
 
@@ -6,6 +8,7 @@
 //   const { campus, removeStudentFromCampus, fetchCampus } = props;
 
 //   const [showAddStudentForm, setShowAddStudentForm] = useState(false);
+//   const [showAddExistingStudentForm, setShowAddExistingStudentForm] = useState(false);
 //   const [formData, setFormData] = useState({
 //     firstname: "",
 //     lastname: "",
@@ -15,6 +18,20 @@
 //   });
 //   const [error, setError] = useState("");
 //   const [success, setSuccess] = useState("");
+//   const [studentsWithoutCampus, setStudentsWithoutCampus] = useState([]);
+
+//   // Fetch students who do not belong to any campus
+//   useEffect(() => {
+//     const fetchStudentsWithoutCampus = async () => {
+//       try {
+//         const response = await axios.get("/api/students/without-campus");
+//         setStudentsWithoutCampus(response.data);
+//       } catch (error) {
+//         console.error("Error fetching students without a campus:", error);
+//       }
+//     };
+//     fetchStudentsWithoutCampus();
+//   }, []);
 
 //   // Handle removing a student with confirmation
 //   const handleRemoveStudent = async (studentId) => {
@@ -32,16 +49,16 @@
 //     setFormData({ ...formData, [e.target.name]: e.target.value });
 //   };
 
-//   // Handle form submission
-//   const handleSubmit = async (e) => {
+//   // Handle adding a new student to the campus
+//   const handleAddStudent = async (e) => {
 //     e.preventDefault();
 //     setError("");
 //     setSuccess("");
 
 //     try {
-//       await axios.post("/api/students/add-to-campus", {
+//       const response = await axios.post("/api/students", {
 //         ...formData,
-//         campusId: campus.id,
+//         campusId: campus.id, // Add campusId to form data
 //       });
 
 //       setSuccess("Student added successfully!");
@@ -52,14 +69,29 @@
 //         imageurl: "",
 //         gpa: "",
 //       });
-//       setShowAddStudentForm(false); // Hide form after submission
-//       await fetchCampus(campus.id); // Refresh campus data
+//       setShowAddStudentForm(false);
+//       await fetchCampus(campus.id);
 //     } catch (error) {
 //       console.error(error);
 //       setError(
-//         error.response?.data?.error ||
-//           "An error occurred while adding the student."
+//         error.response?.data?.error || "An error occurred while adding the student."
 //       );
+//     }
+//   };
+
+//   // Handle adding an existing student to the campus
+//   const handleAddExistingStudent = async (studentId) => {
+//     try {
+//       const response = await axios.put(`/api/students/${studentId}/add-to-campus`, {
+//         campusId: campus.id,
+//       });
+
+//       setSuccess("Existing student added to campus!");
+//       await fetchCampus(campus.id); // Re-fetch campus data
+//       setShowAddExistingStudentForm(false);
+//     } catch (error) {
+//       console.error("Error adding existing student:", error);
+//       setError("An error occurred while adding the existing student.");
 //     }
 //   };
 
@@ -99,12 +131,36 @@
 //           : "Add New Student to This Campus"}
 //       </button>
 
+//       <button onClick={() => setShowAddExistingStudentForm(!showAddExistingStudentForm)}>
+//         {showAddExistingStudentForm
+//           ? "Close Add Existing Student Form"
+//           : "Add Existing Student to This Campus"}
+//       </button>
+
+//       {showAddExistingStudentForm && (
+//         <div>
+//           <h2>Add Existing Student</h2>
+//           {error && <p style={{ color: "red" }}>{error}</p>}
+//           {success && <p style={{ color: "green" }}>{success}</p>}
+//           <ul>
+//             {studentsWithoutCampus.map((student) => (
+//               <li key={student.id}>
+//                 <span>{`${student.firstname} ${student.lastname}`}</span>
+//                 <button onClick={() => handleAddExistingStudent(student.id)}>
+//                   Add to Campus
+//                 </button>
+//               </li>
+//             ))}
+//           </ul>
+//         </div>
+//       )}
+
 //       {showAddStudentForm && (
 //         <div>
 //           <h2>Add New Student</h2>
 //           {error && <p style={{ color: "red" }}>{error}</p>}
 //           {success && <p style={{ color: "green" }}>{success}</p>}
-//           <form onSubmit={handleSubmit}>
+//           <form onSubmit={handleAddStudent}>
 //             <div>
 //               <label>First Name:</label>
 //               <input
@@ -166,13 +222,11 @@
 //       <Link to={`/editcampus/${campus.id}`}>
 //         <button>Edit Campus</button>
 //       </Link>
-//       </div>
+//     </div>
 //   );
 // };
 
 // export default CampusView;
-
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -181,6 +235,7 @@ const CampusView = (props) => {
   const { campus, removeStudentFromCampus, fetchCampus } = props;
 
   const [showAddStudentForm, setShowAddStudentForm] = useState(false);
+  const [showAddExistingStudentForm, setShowAddExistingStudentForm] = useState(false);
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -190,7 +245,24 @@ const CampusView = (props) => {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [studentsWithoutCampus, setStudentsWithoutCampus] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null); // Store selected student
 
+  // Fetch students who do not belong to any campus
+  const fetchStudentsWithoutCampus = async () => {
+    try {
+      const response = await axios.get("/api/students/");
+      // Filter students who do not have a campusId (NULL or empty string)
+      const filteredStudents = response.data.filter(
+        (student) => student.campusId === null || student.campusId === ""
+      );
+      setStudentsWithoutCampus(filteredStudents); // Update the state with filtered students
+    } catch (error) {
+      console.error("Error fetching students without a campus:", error);
+      setError("Failed to fetch students without a campus");
+    }
+  };
+  
   // Handle removing a student with confirmation
   const handleRemoveStudent = async (studentId) => {
     const confirmation = window.confirm(
@@ -207,26 +279,18 @@ const CampusView = (props) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle adding a student to the campus
+  // Handle adding a new student to the campus
   const handleAddStudent = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    // Log the form data and campus ID before making the API call
-    console.log("Campus ID:", campus.id);
-    console.log("Form Data:", formData);
-
     try {
-      // Make API call to add student to the campus
-      const response = await axios.post("/api/students", {
+      await axios.post("/api/students", {
         ...formData,
-        campusId: campus.id, // Make sure campusId is correctly added to the form data
+        campusId: campus.id, // Add campusId to form data
       });
 
-      console.log("Response from API:", response.data); // Log the response
-
-      // Set success message and reset form data
       setSuccess("Student added successfully!");
       setFormData({
         firstname: "",
@@ -235,17 +299,38 @@ const CampusView = (props) => {
         imageurl: "",
         gpa: "",
       });
-
-      // Hide the form and refresh the campus data
       setShowAddStudentForm(false);
-      await fetchCampus(campus.id); // Re-fetch campus data to include new student
+      await fetchCampus(campus.id);
     } catch (error) {
-      console.error("API Error:", error); // Log any errors for debugging
+      console.error(error);
       setError(
         error.response?.data?.error || "An error occurred while adding the student."
       );
     }
   };
+
+  // Handle selecting an existing student from dropdown
+  const handleAddExistingStudent = async () => {
+    if (!selectedStudent) {
+      setError("Please select a student.");
+      return;
+    }
+  
+    try {
+      // Perform the PUT request without assigning the response to a variable
+      await axios.put(`/api/students/${selectedStudent}/`, {
+        campusId: campus.id,
+      });
+  
+      setSuccess("Existing student added to campus!");
+      setShowAddExistingStudentForm(false); // Hide dropdown after selection
+      await fetchCampus(campus.id); // Re-fetch campus data
+    } catch (error) {
+      console.error("Error adding existing student:", error);
+      setError("An error occurred while adding the existing student.");
+    }
+  };
+  
 
   return (
     <div>
@@ -282,6 +367,32 @@ const CampusView = (props) => {
           ? "Close Add Student Form"
           : "Add New Student to This Campus"}
       </button>
+
+      <button onClick={() => { setShowAddExistingStudentForm(true); fetchStudentsWithoutCampus(); }}>
+        {showAddExistingStudentForm
+          ? "Close Add Existing Student Form"
+          : "Add Existing Student to This Campus"}
+      </button>
+
+      {showAddExistingStudentForm && (
+        <div>
+          <h2>Add Existing Student</h2>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {success && <p style={{ color: "green" }}>{success}</p>}
+          <select
+            onChange={(e) => setSelectedStudent(e.target.value)}
+            value={selectedStudent || ""}
+          >
+            <option value="">Select a student</option>
+            {studentsWithoutCampus.map((student) => (
+              <option key={student.id} value={student.id}>
+                {`${student.firstname} ${student.lastname}`}
+              </option>
+            ))}
+          </select>
+          <button onClick={handleAddExistingStudent}>Add to Campus</button>
+        </div>
+      )}
 
       {showAddStudentForm && (
         <div>
