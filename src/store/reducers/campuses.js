@@ -8,14 +8,18 @@ It also defines the State and its default initial value.
 import * as at from "../actions/actionTypes";  // Import Action Types ("at" keyword for Action Type)
 
 // REDUCER:
-const allCampuses = (state = [], action) => {  // Empty array as default Initial State
+const allCampusesReducer = (state = [], action) => {
   switch (action.type) {
     case at.FETCH_ALL_CAMPUSES:
-      return action.payload;
+      // Ensure campuses are sorted when fetched
+      return action.payload.sort((a, b) => a.id - b.id);
+    case at.ADD_CAMPUS:
+      return [...state, action.payload].sort((a, b) => a.id - b.id);
+    case at.DELETE_CAMPUS:
+      return state.filter((campus) => campus.id !== action.payload); // Remove campus by ID
     default:
-      // If the Reducer doesn't recognize the Action Type, returns the previous (current) State unchanged.
       return state;
   }
 };
 
-export default allCampuses;
+export default allCampusesReducer;

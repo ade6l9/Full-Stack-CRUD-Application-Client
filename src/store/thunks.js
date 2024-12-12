@@ -34,6 +34,17 @@ export const fetchCampusThunk = (id) => async (dispatch) => {  // The THUNK
 
 // All Students
 // THUNK CREATOR:
+// export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
+//   try {
+//     // API "get" call to get "students" data from database
+//     let res = await axios.get(`/api/students`);  
+//     // Call Action Creator to return Action object (type + payload with "students" data)
+//     // Then dispatch the Action object to Reducer to update state 
+//     dispatch(ac.fetchAllStudents(res.data));  
+//   } catch(err) {
+//     console.error(err);
+//   }
+// };
 export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
   try {
     // API "get" call to get "students" data from database
@@ -46,18 +57,28 @@ export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
   }
 };
 
+
 // Add Student
 // THUNK CREATOR:
-export const addStudentThunk = (student) => async (dispatch) => {  // The THUNK
+export const addStudentThunk = (student) => async (dispatch) => {
   try {
-    // API "post" call to add "student" object's data to database
-    let res = await axios.post(`/api/students`, student);  
-    // Call Action Creator to return Action object (type + payload with new students data)
-    // Then dispatch the Action object to Reducer to update state 
+    // Ensure imageUrl has a fallback
+    student.imageurl = student.imageurl || "https://via.placeholder.com/150"; // Provide a default image URL
+
+    console.log("Student payload:", student); // Debugging log
+
+    // API call to add student
+    let res = await axios.post(`/api/students`, student);
+
+    console.log("Response from backend:", res.data); // Debugging log
+
+    // Dispatch action to update state with new student
     dispatch(ac.addStudent(res.data));
-    return res.data;
-  } catch(err) {
-    console.error(err);
+
+    return res.data; // Return the added student data if needed
+  } catch (err) {
+    console.error("Error adding student:", err);
+    alert("Failed to add student. Please try again.");
   }
 };
 
@@ -98,5 +119,63 @@ export const fetchStudentThunk = id => async dispatch => {  // The THUNK
     dispatch(ac.fetchStudent(res.data));
   } catch(err) {
     console.error(err);
+  }
+};
+
+// Add Campus
+// THUNK CREATOR:
+export const addCampusThunk = (campus) => async (dispatch) => {
+  try {
+    // Ensure imageUrl has a fallback
+    campus.imageUrl = campus.imageUrl || "default-image-url.jpg";
+
+    console.log("Campus payload:", campus); // Debugging log
+
+    // API call to add campus
+    let res = await axios.post(`/api/campuses`, campus);
+
+    console.log("Response from backend:", res.data); // Debugging log
+
+    // Dispatch action to update state with new campus
+    dispatch(ac.addCampus(res.data));
+
+    return res.data;
+  } catch (err) {
+    console.error("Error adding campus:", err);
+    alert("Failed to add campus. Please try again.");
+  }
+};
+
+// Delete Campus
+// THUNK CREATOR:
+export const deleteCampusThunk = (campusId) => async (dispatch) => {
+  try {
+    // Send DELETE request to the backend
+    await axios.delete(`/api/campuses/${campusId}`);
+
+    // Dispatch action to update the Redux store
+    dispatch(ac.deleteCampus(campusId));
+  } catch (err) {
+    console.error("Error deleting campus:", err);
+  }
+};
+
+
+
+
+
+
+
+
+// Thunk to remove student from campus
+export const removeStudentFromCampusThunk = (studentId, campusId) => async (dispatch) => {
+  try {
+    // Update the student's campusId to null
+    await axios.put(`/api/students/${studentId}`, { campusId: null });
+
+    // Refresh the campus data
+    dispatch(ac.fetchCampus(campusId));
+  } catch (error) {
+    console.error('Error removing student from campus:', error);
   }
 };

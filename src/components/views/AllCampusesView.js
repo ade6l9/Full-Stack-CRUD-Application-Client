@@ -8,39 +8,54 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const AllCampusesView = (props) => {
-  // If there is no campus, display a message.
+  // If there are no campuses, display a message
   if (!props.allCampuses.length) {
-    return <div>There are no campuses.</div>;
+    return (
+      <div>
+        <h1>All Campuses</h1>
+        <div>There are no campuses.</div>
+        <br />
+        <Link to={`/addcampus`}>
+          <button>Add New Campus</button> {/* Add New Campus Button */}
+        </Link>
+      </div>
+    );
   }
 
-  // If there is at least one campus, render All Campuses view 
+  // Sort campuses by ID in ascending order before rendering
+  const sortedCampuses = [...props.allCampuses].sort((a, b) => a.id - b.id);
+
+  // If there are campuses, render the list
   return (
     <div>
       <h1>All Campuses</h1>
-
-      {props.allCampuses.map((campus) => (
+      {sortedCampuses.map((campus) => (
         <div key={campus.id}>
           <Link to={`/campus/${campus.id}`}>
             <h2>{campus.name}</h2>
           </Link>
-          <h4>campus id: {campus.id}</h4>
+          <h4>Campus ID: {campus.id}</h4>
           <p>{campus.address}</p>
           <p>{campus.description}</p>
-          <hr/>
+          {/* Delete Campus Button */}
+          <button onClick={() => props.deleteCampus(campus.id)}>Delete Campus</button>
+          <hr />
         </div>
       ))}
-      <br/>
-      <Link to={`/`}>
+      <br />
+      {/* Add New Campus Button */}
+      <Link to={`/addcampus`}>
         <button>Add New Campus</button>
       </Link>
-      <br/><br/>
+      <br /><br />
     </div>
   );
 };
 
-// Validate data type of the props passed to component.
+// Prop Types Validation
 AllCampusesView.propTypes = {
   allCampuses: PropTypes.array.isRequired,
+  deleteCampus: PropTypes.func.isRequired, // Ensure deleteCampus function is passed
 };
 
 export default AllCampusesView;

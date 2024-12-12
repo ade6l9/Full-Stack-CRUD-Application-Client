@@ -9,7 +9,7 @@ import Header from './Header';
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchAllCampusesThunk } from "../../store/thunks";
+import { fetchAllCampusesThunk, addCampusThunk, deleteCampusThunk } from "../../store/thunks"; // Consolidated imports
 import { AllCampusesView } from "../views";
 
 class AllCampusesContainer extends Component {
@@ -26,6 +26,7 @@ class AllCampusesContainer extends Component {
         <Header />
         <AllCampusesView
           allCampuses={this.props.allCampuses}
+          deleteCampus={this.props.deleteCampus} // Pass deleteCampus to View
         />
       </div>
     );
@@ -45,6 +46,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+    addCampus: (campus) => dispatch(addCampusThunk(campus)), // Added
+    deleteCampus: (campusId) => dispatch(deleteCampusThunk(campusId)), // Add deleteCampusThunk
   };
 };
 
@@ -52,6 +55,8 @@ const mapDispatch = (dispatch) => {
 AllCampusesContainer.propTypes = {
   allCampuses: PropTypes.array.isRequired,
   fetchAllCampuses: PropTypes.func.isRequired,
+  addCampus: PropTypes.func.isRequired, 
+  deleteCampus: PropTypes.func.isRequired,
 };
 
 // Export store-connected container by default

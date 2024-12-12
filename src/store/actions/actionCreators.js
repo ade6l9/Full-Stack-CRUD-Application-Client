@@ -21,7 +21,23 @@ export const fetchCampus = (campus) => {
   };
 };
 
-//All Students
+// Add Campus
+export const addCampus = (campus) => {
+  return {
+    type: at.ADD_CAMPUS,
+    payload: campus,
+  };
+};
+
+// Delete Campus
+export const deleteCampus = (campusId) => {
+  return {
+    type: at.DELETE_CAMPUS,
+    payload: campusId,
+  };
+};
+
+// All Students
 export const fetchAllStudents = (students) => {
   return {
     type: at.FETCH_ALL_STUDENTS,
@@ -29,13 +45,16 @@ export const fetchAllStudents = (students) => {
   };
 };
 
+// Add Student
 export const addStudent = (student) => {
+  console.log('Adding new student:', student);
   return {
     type: at.ADD_STUDENT,
     payload: student,
   };
 };
 
+// Delete Student
 export const deleteStudent = (studentId) => {
   return {
     type: at.DELETE_STUDENT,
@@ -43,7 +62,7 @@ export const deleteStudent = (studentId) => {
   };
 };
 
-
+// Edit Student
 export const editStudent = (student) => {
   return {
     type: at.EDIT_STUDENT,
@@ -58,3 +77,8 @@ export const fetchStudent = (student) => {
     payload: student,
   };
 };
+
+
+
+
+
