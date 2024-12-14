@@ -1,4 +1,4 @@
-i/*==================================================
+/*==================================================
 Header.js
 
 It contains the Header component to be displayed on every page.
