@@ -23,14 +23,14 @@ Before setting up the project, ensure you have the following installed:
    ```bash
    git clone <client-repository-url>
 2. Navigate to the project directory:
-  ```bash
-  cd client
+   ```bash
+   cd client
 3. Install dependencies:
-  ```bash
-  npm install
+   ```bash
+   npm install
 4. Start the application:
-  ```bash
-  npm start
+   ```bash
+   npm start
 5. The application will be available at http://localhost:3000.
 
 
@@ -65,7 +65,7 @@ Before setting up the project, ensure you have the following installed:
     - Delete a student
     - Navigate to the Single Student View
 
-S# Single Student View
+# Single Student View
 - Displays detailed information about a specific student:
     - Name, email, GPA, image, and enrolled campus (if any)
 - Functionalities:
