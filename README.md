@@ -1,48 +1,96 @@
-# client-starter-code
+# Campus Management System - Client
 
-This repository is the client (front-end) starter code for Final Project - Full-Stack CRUD Application.
+This is the client-side application for the Campus Management System. It is built with React and Redux and provides a user-friendly interface for managing campuses and students.
 
-----------
-### 1. Use the following process to ***import*** the Final Project client starter code repository to your GitHub account as the starter codebase
-1.	Log on to GitHub
-2.	Click on the + sign in the top right corner (next to the user icon)
-3.	In the dropdown menu, select "Import repository"
-4.	A new page will open
-5.	In "Your old repository’s clone URL" field, enter: `https://github.com/johnnylaicode/client-starter-code`
-6.	In "Your new repository details" field, enter your own repository name (e.g., "final-project-client")
-7.	Click on the "Begin import" button to start the process
-8.	After the process completed, your new "final-project-client" repository is created – as a completely independent codebase
-9.	From this point on, you can clone your new repository, make changes, create feature branches, and create/merge pull requests
+## Features
 
-----------
-### 2. Use the information below to ***clone*** the starter codebase to your local machine
-After creating the starter codebase "final-project-client" repository on GitHub (see above), you can clone it to your local machine. The instructions on how to clone a GitHub repository are available at this [link](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+- Home page with navigation to campuses and students
+- CRUD functionality for campuses and students
+- State management using Redux
+- Real-time form validation with error messages
+- Responsive and visually appealing design
 
-----------
-### 3. Set up and run the client (front-end) application on your local machine
-1.	Start a terminal (e.g., Git Bash) on your local machine.
-2.  Go to the "final-project-client" folder, enter the command to install dependencies: `npm install` 
-3.	Start the client application by entering the command: `npm start` 
-4.	After the client application is successfully started, a web browser is automatically opened at the address: `http://localhost:3000` 
+## Prerequisites
 
-<br/>
+Before setting up the project, ensure you have the following installed:
 
-## Common Errors You May Encounter
-### Error: ERR_OSSL_EVP_UNSUPPORTED
-This error indicates that your application uses an algorithm or key size not supported by OpenSSL 3.0.
-#### Solution: 
-1. If you use *Windows*, in the `package.json` file, set the "scripts" attributes as follows:
+- Node.js (v16 or higher)
+- npm (v7 or higher)
 
-```
-  "scripts": {
-  "start": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start", 
-  "build": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build", 
-  ...
-    },
-```
+## Installation and Setup
 
-2. If you use *Mac OSX or Linux*, include the following command in the `~/.bash_profile` or `~/.bashrc` file.
+1. Clone the repository:
+   ```bash
+   git clone <client-repository-url>
+2. Navigate to the project directory:
+  ```bash
+  cd client
+3. Install dependencies:
+  ```bash
+  npm install
+4. Start the application:
+  ```bash
+  npm start
+5. The application will be available at http://localhost:3000.
 
-```
-  export NODE_OPTIONS=--openssl-legacy-provider
-```
+
+## Pages and Features
+
+# Home Page
+- Default landing page with navigation links to:
+    - All Campuses View
+    - All Students View
+
+# All Campuses View
+- Displays a list of all campuses
+- Includes the following functionalities:
+    - Add a new campus
+    - Delete a campus
+    - Navigate to the Single Campus View
+
+# Single Campus View
+- Displays detailed information about a specific campus:
+    - Name, address, description, and image
+    - A list of enrolled students (if any)
+- Functionalities:
+    - Add or remove students
+    - Edit campus information
+    - Delete the campus
+    = Navigate to a student's detailed view
+
+# All Students View
+- Displays a list of all students
+- Includes the following functionalities:
+    - Add a new student
+    - Delete a student
+    - Navigate to the Single Student View
+
+S# Single Student View
+- Displays detailed information about a specific student:
+    - Name, email, GPA, image, and enrolled campus (if any)
+- Functionalities:
+    - Edit student information
+    - Delete the student
+    - Navigate to the campus they are enrolled in
+
+# Add/Edit Campus and Student Views
+- Forms to add or edit a campus or student
+- Real-time form validation for:
+    - Empty fields
+    - Invalid inputs (e.g., invalid email, GPA out of range)
+- Updates the view dynamically after form submission without a page refresh
+
+#State Management (Redux)
+- Campus Reducer: Manages state related to campuses
+- Student Reducer: Manages state related to students
+
+#Client-Side Routing (React Router)
+
+- Route /campuses: Displays All Campuses View
+- Route /students: Displays All Students View
+- Route /campus/:campusId: Displays Single Campus View
+- Route /student/:studentId: Displays Single Student View
+
+## Contributor
+Adelina Dautovic <br>
+Github: ade6l9

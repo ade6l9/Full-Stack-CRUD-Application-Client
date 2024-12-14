@@ -5,6 +5,7 @@ The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
 If needed, it also defines the component's "connect" function.
 ================================================== */
+
 import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';

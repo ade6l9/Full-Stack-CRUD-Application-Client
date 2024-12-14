@@ -1,8 +1,18 @@
+/*==================================================
+AddCampusContainer.js
+
+This file serves as the container component for adding a new campus.
+It manages the form state for the "Add Campus" page and handles
+dispatching the action to add a new campus to the Redux store.
+Upon successful submission, the user is redirected to the "All Campuses" page.
+==================================================*/
+
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom"; // Use withRouter
 import { addCampusThunk } from "../../store/thunks";
 import AddCampusView from "../views/AddCampusView";
+import Header from "./Header"; // Include the Header component
 
 class AddCampusContainer extends Component {
   constructor() {
@@ -28,14 +38,18 @@ class AddCampusContainer extends Component {
 
   render() {
     return (
-      <AddCampusView
-        handleSubmit={this.handleSubmit}
-        handleChange={this.handleChange}
-        name={this.state.name}
-        address={this.state.address}
-        description={this.state.description}
-        imageUrl={this.state.imageUrl}
-      />
+      <div>
+    <Header /> {/* Add Header component */}
+    <AddCampusView
+      handleSubmit={this.handleSubmit}
+      handleChange={this.handleChange}
+      name={this.state.name}
+      address={this.state.address}
+      description={this.state.description}
+      imageUrl={this.state.imageUrl}
+  />
+</div>
+
     );
   }
 }

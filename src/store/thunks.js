@@ -114,7 +114,7 @@ export const fetchStudentThunk = (id) => async (dispatch) => {
 export const addCampusThunk = (campus) => async (dispatch) => {
   try {
     // Ensure imageUrl has a fallback
-    campus.imageUrl = campus.imageUrl || "default-image-url.jpg";
+    campus.imageUrl = campus.imageUrl || "https://via.placeholder.com/150";
 
     console.log("Campus payload:", campus); // Debugging log
 

@@ -1,66 +1,97 @@
-// /*==================================================
-// NewStudentView.js
+/*==================================================
+NewStudentView.js
 
-// The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-// It constructs a React component to display the new student page.
-// ================================================== */
+The Views component is responsible for rendering web page with data provided by the corresponding Container component.
+It constructs a React component to display the new student page.
+================================================== */
 
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  formContainer: {
-    width: '500px',
-    backgroundColor: '#f0f0f5',
-    borderRadius: '5px',
-    margin: 'auto',
-    padding: '20px',
+  root: {
+    backgroundImage: `url('https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2023/02/hogwarts-legacy-2951560.jpg?tf=3840x')`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "20px",
   },
-  title: {
-    flexGrow: 1,
-    textAlign: 'left',
-    textDecoration: 'none',
-    marginBottom: '20px',
+  formContainer: {
+    width: "500px",
+    backgroundColor: "rgba(255, 255, 255, 0.8)", // Slight transparency
+    borderRadius: "12px",
+    padding: "30px",
+    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
   },
   formTitle: {
-    backgroundColor: '#c5c8d6',
-    marginBottom: '15px',
-    textAlign: 'center',
-    borderRadius: '5px 5px 0px 0px',
-    padding: '3px',
+    backgroundColor: "#5a5a5a", // Neutral dark gray
+    color: "#ffffff", // White text
+    textAlign: "center",
+    padding: "10px",
+    borderRadius: "8px 8px 0 0",
+    fontFamily: "'Roboto', sans-serif",
+    fontSize: "20px",
+    marginBottom: "20px",
   },
   inputField: {
-    width: '100%',
-    padding: '10px',
-    marginBottom: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
+    width: "100%",
+    padding: "10px",
+    marginBottom: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    fontSize: "16px",
+    backgroundColor: "#f9f9f9", // Light neutral background
   },
   error: {
-    color: 'red',
-    fontSize: '12px',
-    marginBottom: '10px',
+    color: "red",
+    fontSize: "14px",
+    marginBottom: "10px",
   },
   label: {
-    color: '#11153e',
-    fontWeight: 'bold',
-    marginBottom: '10px',
+    color: "#333333",
+    fontWeight: "bold",
+    marginBottom: "10px",
+    fontSize: "16px",
+  },
+  buttonGroup: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "20px",
+  },
+  button: {
+    padding: "10px 20px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    borderRadius: "8px",
+    textTransform: "capitalize",
+    backgroundColor: "#d3d3d3", // Neutral gray
+    color: "#000000", // Black text
+    "&:hover": {
+      backgroundColor: "#b0b0b0", // Slightly darker gray on hover
+    },
   },
 }));
 
-const NewStudentView = ({ newStudent, errors, blankFieldError, handleChange, handleSubmit, handleCancel }) => {
+const NewStudentView = ({
+  newStudent,
+  errors,
+  blankFieldError,
+  handleChange,
+  handleSubmit,
+  handleCancel,
+}) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <h1 className={classes.title}>New Student</h1>
+    <div className={classes.root}>
       <div className={classes.formContainer}>
         <div className={classes.formTitle}>
-          <Typography style={{ fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e' }}>
-            Add a Student
-          </Typography>
+          <Typography variant="h6">Add a Student</Typography>
         </div>
         {blankFieldError && <div className={classes.error}>{blankFieldError}</div>}
         <form onSubmit={handleSubmit}>
@@ -73,6 +104,7 @@ const NewStudentView = ({ newStudent, errors, blankFieldError, handleChange, han
             className={classes.inputField}
           />
           {errors.firstname && <div className={classes.error}>{errors.firstname}</div>}
+
           <input
             type="text"
             name="lastname"
@@ -82,6 +114,7 @@ const NewStudentView = ({ newStudent, errors, blankFieldError, handleChange, han
             className={classes.inputField}
           />
           {errors.lastname && <div className={classes.error}>{errors.lastname}</div>}
+
           <input
             type="email"
             name="email"
@@ -91,6 +124,7 @@ const NewStudentView = ({ newStudent, errors, blankFieldError, handleChange, han
             className={classes.inputField}
           />
           {errors.email && <div className={classes.error}>{errors.email}</div>}
+
           <input
             type="text"
             name="imageurl"
@@ -100,6 +134,7 @@ const NewStudentView = ({ newStudent, errors, blankFieldError, handleChange, han
             className={classes.inputField}
           />
           {errors.imageurl && <div className={classes.error}>{errors.imageurl}</div>}
+
           <input
             type="number"
             name="gpa"
@@ -109,6 +144,7 @@ const NewStudentView = ({ newStudent, errors, blankFieldError, handleChange, han
             className={classes.inputField}
           />
           {errors.gpa && <div className={classes.error}>{errors.gpa}</div>}
+
           <input
             type="number"
             name="campusId"
@@ -118,9 +154,27 @@ const NewStudentView = ({ newStudent, errors, blankFieldError, handleChange, han
             className={classes.inputField}
           />
           {errors.campusId && <div className={classes.error}>{errors.campusId}</div>}
-          <p>Campus Name: {newStudent.campusName}</p>
-          <Button type="submit" variant="contained" color="primary">Submit</Button>
-          <Button variant="contained" color="secondary" onClick={handleCancel}>Cancel</Button>
+
+          <p style={{ fontWeight: "bold", marginBottom: "20px" }}>
+            Campus Name: {newStudent.campusName}
+          </p>
+
+          <div className={classes.buttonGroup}>
+            <Button
+              type="submit"
+              variant="contained"
+              className={classes.button}
+            >
+              Submit
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
       </div>
     </div>

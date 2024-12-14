@@ -1,10 +1,10 @@
-// /*==================================================
-// NewStudentContainer.js
+/*==================================================
+NewStudentContainer.js
 
-// The Container component is responsible for stateful logic and data fetching, and
-// passes data (if any) as props to the corresponding View component.
-// If needed, it also defines the component's "connect" function.
-// ================================================== */
+The Container component is responsible for stateful logic and data fetching, and
+passes data (if any) as props to the corresponding View component.
+If needed, it also defines the component's "connect" function.
+================================================== */
 
 import Header from './Header';
 import React, { useState } from 'react';
