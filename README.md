@@ -14,8 +14,8 @@ This is the client-side application for the Campus Management System. It is buil
 
 Before setting up the project, ensure you have the following installed:
 
-- Node.js (v16 or higher)
-- npm (v7 or higher)
+- Node.js 
+- npm 
 
 ## Installation and Setup
 
