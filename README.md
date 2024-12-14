@@ -80,11 +80,11 @@ Before setting up the project, ensure you have the following installed:
     - Invalid inputs (e.g., invalid email, GPA out of range)
 - Updates the view dynamically after form submission without a page refresh
 
-##State Management (Redux)
+## State Management (Redux)
 - Campus Reducer: Manages state related to campuses
 - Student Reducer: Manages state related to students
 
-##Client-Side Routing (React Router)
+## Client-Side Routing (React Router)
 
 - Route /campuses: Displays All Campuses View
 - Route /students: Displays All Students View
