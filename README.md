@@ -34,21 +34,21 @@ Before setting up the project, ensure you have the following installed:
 5. The application will be available at http://localhost:3000.
 
 
-## Pages and Features
+# Pages and Features
 
-# Home Page
+## Home Page
 - Default landing page with navigation links to:
     - All Campuses View
     - All Students View
 
-# All Campuses View
+## All Campuses View
 - Displays a list of all campuses
 - Includes the following functionalities:
     - Add a new campus
     - Delete a campus
     - Navigate to the Single Campus View
 
-# Single Campus View
+## Single Campus View
 - Displays detailed information about a specific campus:
     - Name, address, description, and image
     - A list of enrolled students (if any)
@@ -58,14 +58,14 @@ Before setting up the project, ensure you have the following installed:
     - Delete the campus
     = Navigate to a student's detailed view
 
-# All Students View
+## All Students View
 - Displays a list of all students
 - Includes the following functionalities:
     - Add a new student
     - Delete a student
     - Navigate to the Single Student View
 
-# Single Student View
+## Single Student View
 - Displays detailed information about a specific student:
     - Name, email, GPA, image, and enrolled campus (if any)
 - Functionalities:
@@ -73,18 +73,18 @@ Before setting up the project, ensure you have the following installed:
     - Delete the student
     - Navigate to the campus they are enrolled in
 
-# Add/Edit Campus and Student Views
+## Add/Edit Campus and Student Views
 - Forms to add or edit a campus or student
 - Real-time form validation for:
     - Empty fields
     - Invalid inputs (e.g., invalid email, GPA out of range)
 - Updates the view dynamically after form submission without a page refresh
 
-#State Management (Redux)
+##State Management (Redux)
 - Campus Reducer: Manages state related to campuses
 - Student Reducer: Manages state related to students
 
-#Client-Side Routing (React Router)
+##Client-Side Routing (React Router)
 
 - Route /campuses: Displays All Campuses View
 - Route /students: Displays All Students View
