@@ -6,16 +6,12 @@ import EditCampusView from "../views/EditCampusView";
 
 const mapState = (state) => {
   return {
-    campus: state.campus, // Adjust based on your reducer structure
+    campus: state.campus, 
   };
 };
 
-// const mapDispatch = (dispatch) => ({
-//     fetchCampus: (id) => dispatch(fetchCampusThunk(id)), // Correct mapping
-//     updateCampus: (id, campus) => dispatch(updateCampusThunk(id, campus)),
-//   });
 const mapDispatch = (dispatch) => ({
-    fetchCampus: (id) => dispatch(fetchCampusThunk(id)), // Use fetchCampusThunk
+    fetchCampus: (id) => dispatch(fetchCampusThunk(id)), 
     updateCampus: (id, campus) => dispatch(updateCampusThunk(id, campus)),
   });
   

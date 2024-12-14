@@ -34,17 +34,6 @@ export const fetchCampusThunk = (id) => async (dispatch) => {  // The THUNK
 
 // All Students
 // THUNK CREATOR:
-// export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
-//   try {
-//     // API "get" call to get "students" data from database
-//     let res = await axios.get(`/api/students`);  
-//     // Call Action Creator to return Action object (type + payload with "students" data)
-//     // Then dispatch the Action object to Reducer to update state 
-//     dispatch(ac.fetchAllStudents(res.data));  
-//   } catch(err) {
-//     console.error(err);
-//   }
-// };
 export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
   try {
     // API "get" call to get "students" data from database
@@ -57,13 +46,12 @@ export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
   }
 };
 
-
 // Add Student
 // THUNK CREATOR:
 export const addStudentThunk = (student) => async (dispatch) => {
   try {
     // Ensure imageUrl has a fallback
-    student.imageurl = student.imageurl || "https://via.placeholder.com/150"; // Provide a default image URL
+    student.imageurl = student.imageurl || "https://via.placeholder.com/150"; 
 
     console.log("Student payload:", student); // Debugging log
 
@@ -160,7 +148,8 @@ export const deleteCampusThunk = (campusId) => async (dispatch) => {
   }
 };
 
-// edit campus
+// Edit Campus
+// THUNK CREATOR:
 export const updateCampusThunk = (campusId, updatedData) => async (dispatch) => {
   try {
     const { data: updatedCampus } = await axios.put(`/api/campuses/${campusId}`, updatedData);
@@ -170,12 +159,8 @@ export const updateCampusThunk = (campusId, updatedData) => async (dispatch) => 
   }
 };
 
-
-
-
-
-
-// Thunk to remove student from campus
+// Remove student from campus
+// THUNK CREATOR:
 export const removeStudentFromCampusThunk = (studentId, campusId) => async (dispatch) => {
   try {
     // Update the student's campusId to null

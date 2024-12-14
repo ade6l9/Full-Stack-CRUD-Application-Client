@@ -38,8 +38,12 @@ const EditCampusView = ({ fetchCampus, updateCampus, campus }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateCampus(id, formData); // Call the updateCampus thunk
+    await updateCampus(id, formData); // Call the updateCampus function
     history.push(`/campus/${id}`); // Navigate back to the Campus View
+  };
+
+  const handleCancel = () => {
+    history.push(`/campus/${id}`); // Navigate back to the Campus page without saving
   };
 
   return (
@@ -88,6 +92,7 @@ const EditCampusView = ({ fetchCampus, updateCampus, campus }) => {
         </label>
         <br />
         <button type="submit">Save Changes</button>
+        <button type="button" onClick={handleCancel}>Cancel</button>
       </form>
     </div>
   );

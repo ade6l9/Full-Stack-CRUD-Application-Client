@@ -19,16 +19,6 @@ class CampusContainer extends Component {
     this.props.fetchCampus(this.props.match.params.id);
   }
 
-  // Render a Campus view by passing campus data as props to the corresponding View component
-//   render() {
-//     return (
-//       <div>
-//         <Header />
-//         <CampusView campus={this.props.campus} />
-//       </div>
-//     );
-//   }
-// }
 render() {
   return (
     <div>
@@ -43,7 +33,6 @@ render() {
 }
 
 }
-
 
 // The following 2 input arguments are passed to the "connect" function used by "CampusContainer" component to connect to Redux Store.
 // 1. The "mapState" argument specifies the data from Redux Store that the component needs.
@@ -72,8 +61,6 @@ const mapDispatch = (dispatch) => ({
   removeStudentFromCampus: (studentId, campusId) =>
     dispatch(removeStudentFromCampusThunk(studentId, campusId)),
 });
-
-
 
 // Export store-connected container by default
 // CampusContainer uses "connect" function to connect to Redux Store and to read values from the Store 
