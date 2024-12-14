@@ -1,22 +1,20 @@
-/*==================================================
-StudentView.js
-
-The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display the single student view page.
-================================================== */
+// /*==================================================
 // StudentView.js
+
+// The Views component is responsible for rendering web page with data provided by the corresponding Container component.
+// It constructs a React component to display the single student view page.
+// ================================================== */
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const StudentView = (props) => {
-  const { student } = props;
+const StudentView = ({ student, campus, fetchStudent, onDeleteStudent }) => {
   const [campuses, setCampuses] = useState([]); // List of all campuses
-  const [selectedCampusId, setSelectedCampusId] = useState(""); // Store selected campus ID (initialized as empty string)
-  const [isCampusDropdownVisible, setIsCampusDropdownVisible] = useState(false); // Track if the dropdown is visible
-  const [success, setSuccess] = useState(""); // Track success messages
-  const [error, setError] = useState(""); // Track error messages
+  const [selectedCampusId, setSelectedCampusId] = useState(""); // Store selected campus ID
+  const [isCampusDropdownVisible, setIsCampusDropdownVisible] = useState(false); // Track dropdown visibility
+  const [success, setSuccess] = useState(""); // Success messages
+  const [error, setError] = useState(""); // Error messages
 
   // Fetch all campuses when the component is mounted
   useEffect(() => {
@@ -41,11 +39,11 @@ const StudentView = (props) => {
       try {
         // Send the request to remove the student from campus
         await axios.put(`/api/students/${student.id}/`, {
-          campusId: null, // Set campusId to null to remove the student from the campus
+          campusId: null, // Set campusId to null
         });
 
         setSuccess("Student removed from campus successfully!"); // Update success message
-        window.location.reload(); // Reload to reflect the changes
+        fetchStudent(student.id); // Refetch the student data
       } catch (error) {
         console.error("Error removing student from campus:", error);
         setError("An error occurred while removing the student from campus."); // Update error message
@@ -81,7 +79,9 @@ const StudentView = (props) => {
       });
 
       setSuccess("Student successfully added to the campus!"); // Show success message
-      window.location.reload(); // Refresh the page after adding the campus
+      fetchStudent(student.id); // Refetch the student to get the updated data
+      setIsCampusDropdownVisible(false); // Hide the dropdown
+      setSelectedCampusId(""); // Clear selected campus
     } catch (error) {
       console.error("Error adding student to campus:", error);
       setError("An error occurred while adding the student to campus."); // Show error message
@@ -120,9 +120,7 @@ const StudentView = (props) => {
       <br />
 
       {/* "Add Campus" Button */}
-      <button onClick={handleAddCampus}>
-        Add Campus
-      </button>
+      <button onClick={handleAddCampus}>Add Campus</button>
 
       {/* Dropdown for selecting a campus */}
       {isCampusDropdownVisible && (
@@ -142,9 +140,8 @@ const StudentView = (props) => {
 
       <br />
       <Link to={`/editstudent/${student.id}`}>
-  <button>Edit Student</button>
-</Link>
-
+        <button>Edit Student</button>
+      </Link>
     </div>
   );
 };

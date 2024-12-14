@@ -98,15 +98,14 @@ export const editStudentThunk = student => async dispatch => {  // The THUNK
 
 // Single Student
 // THUNK CREATOR:
-export const fetchStudentThunk = id => async dispatch => {  // The THUNK
+export const fetchStudentThunk = (id) => async (dispatch) => {
   try {
-    // API "get" call to get a specific student (based on "id") data from database
-    let res = await axios.get(`/api/students/${id}`);  
-    // Call Action Creator to return Action object (type + payload with student data)
-    // Then dispatch the Action object to Reducer to display student data 
+    console.log('Fetching student with ID:', id); // Debug log
+    const res = await axios.get(`/api/students/${id}`);
+    console.log('Student data:', res.data); // Debug log
     dispatch(ac.fetchStudent(res.data));
-  } catch(err) {
-    console.error(err);
+  } catch (err) {
+    console.error('Error in fetchStudentThunk:', err);
   }
 };
 

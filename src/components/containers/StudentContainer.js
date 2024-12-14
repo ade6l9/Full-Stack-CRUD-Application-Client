@@ -1,10 +1,10 @@
-/*==================================================
-StudentContainer.js
+// /*==================================================
+// StudentContainer.js
 
-The Container component is responsible for stateful logic and data fetching, and
-passes data (if any) as props to the corresponding View component.
-If needed, it also defines the component's "connect" function.
-================================================== */
+// The Container component is responsible for stateful logic and data fetching, and
+// passes data (if any) as props to the corresponding View component.
+// If needed, it also defines the component's "connect" function.
+// ================================================== */
 
 import Header from './Header';
 import React, { useEffect } from 'react';
@@ -31,12 +31,12 @@ const StudentContainer = ({
   console.log('StudentContainer: useParams id:', id);
 
   useEffect(() => {
-    fetchStudent(id);
+    fetchStudent(id); // Fetch student data based on ID from URL
   }, [id, fetchStudent]);
 
   useEffect(() => {
     if (student?.campusId) {
-      fetchCampus(student.campusId);
+      fetchCampus(student.campusId); // Fetch campus data for the associated student
     }
   }, [student, fetchCampus]);
 
@@ -44,7 +44,7 @@ const StudentContainer = ({
   console.log('StudentContainer: campus prop:', campus);
 
   if (!student) {
-    return <div>Loading...</div>;
+    return <div>Loading student data...</div>;
   }
 
   return (
@@ -56,6 +56,7 @@ const StudentContainer = ({
       <StudentView
         student={student}
         campus={campus}
+        fetchStudent={fetchStudent}
         onDeleteStudent={(id) => {
           deleteStudent(id);
           history.push("/students"); // Redirect to the students list
